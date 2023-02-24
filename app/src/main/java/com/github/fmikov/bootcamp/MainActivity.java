@@ -21,15 +21,16 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(v, name.getText().toString());
+                sendMessage(v);
             }
         };
         btnApp.setOnClickListener(listener);
     }
 
-    public void sendMessage(View view, String name){
+    public void sendMessage(View view){
         Intent myIntent = new Intent(MainActivity.this, GreetingActivity.class);
-        myIntent.putExtra("name", name); //Optional parameters
+        TextView name = findViewById(R.id.mainName);
+        myIntent.putExtra("name", name.toString()); //Optional parameters
         MainActivity.this.startActivity(myIntent);
     }
 }
