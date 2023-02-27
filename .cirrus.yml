@@ -42,12 +42,24 @@ check_android_task:
     export JACOCO_SOURCE_PATH=app/src/main/java/
     ./cc-test-reporter format-coverage ./app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml --input-type jacoco
     ./cc-test-reporter upload-coverage
+  lint_script:
+    ./gradlew lintDebug
+
   always:
     wait_for_screenrecord_script: |
       pkill -2 -x adb
       sleep 2
     screenrecord_artifacts:
       path: "*.h264"
+    android_lint_artifacts:
+      path: ./app/build/reports/lint-results-debug.xml
+      format: android-lint
+    test_artifacts:
+      path: "./app/build/test-results/**/*.xml"
+      format: junit
+    androidtest_artifacts:
+      path: "./app/build/outputs/**/*.xml"
+      format: junit
 
 env:
   CC_TEST_REPORTER_ID: ENCRYPTED[!f2318fc988d1d4a0a1aa0be493f6660e8e4a46f54aebd991b7a0d203c3c7c7dd9ff3a5c629ccd791251373545f37a998!]
